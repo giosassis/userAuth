@@ -8,5 +8,9 @@ namespace userRole.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<Users> Users { get; set; }
         public DbSet<Permission> Permission { get; set; }
+        public DbSet<Roles> Roles { get; set; }
+        public DbSet<RolePermission> RolePermission { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
+
     }
 }

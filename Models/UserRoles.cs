@@ -2,11 +2,12 @@
 
 namespace userRole.Models
 {
-    public class Permission
+    public class UserRole
     {
         [Key]
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
+        public ICollection<Roles>? Roles { get; set; }
     }
 }
