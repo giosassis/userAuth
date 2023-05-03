@@ -5,6 +5,10 @@ using userRole.Data.Dtos;
 using userRole.Models;
 using userRole.Repository.Interface;
 using userRole.Service.Interface;
+using System.Security.Cryptography;
+using System.Text;
+using userRole.Validators;
+using FluentValidation;
 
 namespace userRole.Service.Implementation
 {
@@ -12,13 +16,17 @@ namespace userRole.Service.Implementation
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        private readonly IPasswordHasher<Users> _passwordHasher;
 
-        public UserService(IUserRepository userRepository, IMapper mapper, IPasswordHasher<Users> passwordHasher)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
-            _passwordHasher = passwordHasher;
+            _mapper = mapper;        
+        }
+
+        public async Task<List<ReadUserDto>> GetAllUsers()
+        {
+            var users = await _userRepository.GetAllAsync();
+            return _mapper.Map<List<ReadUserDto>>(users);
         }
 
         public async Task<ReadUserDto> GetUserByIdAsync(int id)
@@ -33,33 +41,34 @@ namespace userRole.Service.Implementation
             return _mapper.Map<ReadUserDto>(user);
         }
 
-        public async Task<ReadUserDto> AuthenticateAsync(string registrationNumber, string password)
+        public async Task<Users> CreateUserAsync(CreateUserDto userDto)
         {
-            var user = await _userRepository.GetByMatriculaAsync(registrationNumber);
-            var passwordHasher = _passwordHasher.VerifyHashedPassword(user, user.Password, password);
+            var validator = new UserValidator();
+            var validationResult = await validator.ValidateAsync(userDto);
 
-            if (!passwordHasher == PasswordVerificationResult.Success)
+            if (!validationResult.IsValid)
             {
-
-                throw new Exception("Invalid matricula or password");
-            }
-        }
-
-        public async Task CreateAsync(CreateUserDto userDto)
-        {
-            if (await _userRepository.UserExistsByRegistrationNumberAsync(userDto.Matricula))
-            {
-                throw new Exception("Registration number already exists");
+                throw new ValidationException(validationResult.Errors);
             }
 
-            var user = _mapper.Map<Users>(userDto);
-            user.Password = _passwordHasher.HashPassword(user, user.Password);
+            string hashedPassword = HashPassword(userDto.Password);
+
+            string registrationNumber = GenerateRegistrationNumber();
+
+            var user = new Users
+            {
+                Name = userDto.Name,
+                Email = userDto.Email,
+                Password = hashedPassword,
+                RegistrationNumber = registrationNumber
+            };
 
             await _userRepository.AddAsync(user);
-            await _userRepository.SaveChangesAsync();
+
+            return user;
         }
 
-        public async Task UpdateAsync(int id, UpdateUserDto userDto)
+        public async Task<UpdateUserDto> UpdateUserAsync(int id, UpdateUserDto userDto)
         {
             var user = await _userRepository.GetByIdAsync(id);
 
@@ -72,9 +81,12 @@ namespace userRole.Service.Implementation
 
             await _userRepository.UpdateAsync(user);
             await _userRepository.SaveChangesAsync();
+
+            return _mapper.Map<UpdateUserDto>(user);
         }
 
-        public async Task DeleteAsync(int id)
+
+        public async Task DeleteUserAsync(int id)
         {
             var user = await _userRepository.GetByIdAsync(id);
 
@@ -85,6 +97,27 @@ namespace userRole.Service.Implementation
 
             await _userRepository.RemoveAsync(user);
             await _userRepository.SaveChangesAsync();
+        }
+
+        private static string HashPassword(string password)
+        {
+
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+
+                byte[] hashBytes = sha256.ComputeHash(passwordBytes);
+
+                return Convert.ToBase64String(hashBytes);
+            }
+        }
+
+        private string GenerateRegistrationNumber()
+        {
+            Random rnd = new();
+            string randomNumber = rnd.Next(1000, 9999).ToString() + "-" + rnd.Next(10, 99).ToString();
+            string registrationNumber = "2023" + randomNumber;
+            return registrationNumber;
         }
     }
 }

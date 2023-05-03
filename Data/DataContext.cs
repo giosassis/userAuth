@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using userRole.Models;
 
-namespace userRole.Data.Dtos
+namespace userRole.Data
 {
     public class DataContext : DbContext
     {

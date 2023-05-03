@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using userRole.Data.Dtos;
+using userRole.Data;
 using userRole.Models;
 using userRole.Repository.Interface;
 
@@ -55,6 +55,11 @@ namespace userRole.Repository.Implementation
         public async Task<bool> UserExistsByRegistrationNumberAsync(string registrationNumber)
         {
             return await _context.Users.AnyAsync(u => u.RegistrationNumber == registrationNumber);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

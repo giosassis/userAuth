@@ -1,14 +1,14 @@
 ﻿using userRole.Data.Dtos;
+using userRole.Models;
 
 namespace userRole.Service.Interface
 {
     public interface IUserService
     {
-        Task<ReadUserDto> GetAllUsers(int id);
+        Task<List<ReadUserDto>> GetAllUsers();
         Task<ReadUserDto> GetUserByIdAsync(int id);
         Task<ReadUserDto> GetUserByMatriculaAsync(string registrationNumber);
-        Task<CreateUserDto> CreateUserAsync(CreateUserDto userDto);
-        Task<ReadUserDto> AuthenticateAsync(string registrationNumber, string password);
+        Task<Users> CreateUserAsync(CreateUserDto userDto);
         Task<UpdateUserDto> UpdateUserAsync(int userId, UpdateUserDto userDto);
         Task DeleteUserAsync(int userId);
     }

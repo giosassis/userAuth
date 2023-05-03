@@ -12,5 +12,6 @@ namespace userRole.Repository.Interface
         Task RemoveAsync(Users user);
         Task<bool> UserExistsAsync(int id);
         Task<bool> UserExistsByRegistrationNumberAsync(string registrationNumber);
+        Task SaveChangesAsync();
     }
 }
