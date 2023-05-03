@@ -10,6 +10,7 @@ namespace webApi
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
         }
 
         public static void AddServices(this IServiceCollection services)
