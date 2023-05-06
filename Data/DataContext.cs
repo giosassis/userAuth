@@ -10,7 +10,6 @@ namespace userRole.Data
         public DbSet<Permission> Permission { get; set; }
         public DbSet<Roles> Roles { get; set; }
         public DbSet<RolePermission> RolePermission { get; set; }
-        public DbSet<UserRole> UserRole { get; set; }
 
     }
 }

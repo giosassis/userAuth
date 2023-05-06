@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using Xunit.Sdk;
 
-namespace userRole.Models
+namespace userRole.Data.Dtos
 {
-    public class Roles
+    public class UpdateRoleDto
     {
         public int Id { get; set; }
         public string? Title { get; set; }
