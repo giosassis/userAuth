@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using webApi;
 
-namespace webApi
+namespace userRole
 {
     public class WebApi
     {

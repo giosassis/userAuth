@@ -3,7 +3,7 @@ using userRole.Repository.Interface;
 using userRole.Service.Implementation;
 using userRole.Service.Interface;
 
-namespace webApi
+namespace userRole
 {
     public static class DependencyInjection
     {

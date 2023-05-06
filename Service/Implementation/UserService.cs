@@ -35,13 +35,13 @@ namespace userRole.Service.Implementation
             return _mapper.Map<ReadUserDto>(user);
         }
 
-        public async Task<ReadUserDto> GetUserByMatriculaAsync(string registrationNumber)
+        public async Task<ReadUserDto> GetByRegistrationNumberAsync(string registrationNumber)
         {
-            var user = await _userRepository.GetByMatriculaAsync(registrationNumber);
+            var user = await _userRepository.GetByRegistrationNumberAsync(registrationNumber);
             return _mapper.Map<ReadUserDto>(user);
         }
 
-        public async Task<Users> CreateUserAsync(CreateUserDto userDto)
+        public async Task<User> CreateUserAsync(CreateUserDto userDto)
         {
             var validator = new UserValidator();
             var validationResult = await validator.ValidateAsync(userDto);
@@ -55,7 +55,7 @@ namespace userRole.Service.Implementation
 
             string registrationNumber = GenerateRegistrationNumber();
 
-            var user = new Users
+            var user = new User
             {
                 Name = userDto.Name,
                 Email = userDto.Email,

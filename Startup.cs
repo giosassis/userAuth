@@ -6,7 +6,7 @@ using Npgsql;
 using Microsoft.OpenApi.Models;
 using userRole.Data;
 
-namespace webApi
+namespace userRole
 {
 
     public class Startup
@@ -38,7 +38,7 @@ namespace webApi
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".webApi.Session";
-                options.IdleTimeout = System.TimeSpan.FromMinutes(30);
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

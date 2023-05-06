@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
-using userRole.Models;
 using userRole.Data.Dtos;
+using userRole.Models;
 
-namespace userRole.Profiles
+public class PermissionProfile : Profile
 {
-    public class PermissionProfile : Profile
+    public PermissionProfile()
     {
-        public PermissionProfile()
-        {
-            CreateMap<Permission, ReadPermissionDto>();
-        }
+        CreateMap<Permission, ReadPermissionDto>(); ;
     }
 }

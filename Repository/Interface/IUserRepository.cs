@@ -4,12 +4,12 @@ namespace userRole.Repository.Interface
 {
     public interface IUserRepository
     {
-        Task<Users> GetByIdAsync(int id);
-        Task<Users> GetByMatriculaAsync(string registrationNumber);
-        Task<IEnumerable<Users>> GetAllAsync();
-        Task AddAsync(Users user);
-        Task UpdateAsync(Users user);
-        Task RemoveAsync(Users user);
+        Task<User> GetByIdAsync(int id);
+        Task<User> GetByRegistrationNumberAsync(string registrationNumber);
+        Task<List<User>> GetAllAsync();
+        Task AddAsync(User user);
+        Task UpdateAsync(User user);
+        Task RemoveAsync(User user);
         Task<bool> UserExistsAsync(int id);
         Task<bool> UserExistsByRegistrationNumberAsync(string registrationNumber);
         Task SaveChangesAsync();

@@ -1,0 +1,5 @@
+C:\Users\giova\Desktop\Programação\userRole\userRoleTest\obj\Debug\net6.0\userRoleTest.csproj.AssemblyReference.cache
+C:\Users\giova\Desktop\Programação\userRole\userRoleTest\obj\Debug\net6.0\userRoleTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\giova\Desktop\Programação\userRole\userRoleTest\obj\Debug\net6.0\userRoleTest.AssemblyInfoInputs.cache
+C:\Users\giova\Desktop\Programação\userRole\userRoleTest\obj\Debug\net6.0\userRoleTest.AssemblyInfo.cs
+C:\Users\giova\Desktop\Programação\userRole\userRoleTest\obj\Debug\net6.0\userRoleTest.csproj.CoreCompileInputs.cache

@@ -14,34 +14,34 @@ namespace userRole.Repository.Implementation
             _context = context;
         }
 
-        public async Task<Users> GetByIdAsync(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<Users> GetByMatriculaAsync(string registrationNumber)
+        public async Task<User> GetByRegistrationNumberAsync(string registrationNumber)
         {
-            return await _context.Users.FindAsync(registrationNumber);
+            return await _context.Users.FirstOrDefaultAsync(u => u.RegistrationNumber == registrationNumber);
         }
 
-        public async Task<IEnumerable<Users>> GetAllAsync()
+        public async Task<List<User>> GetAllAsync()
         {
             return await _context.Users.ToListAsync();
         }
 
-        public async Task AddAsync(Users user)
+        public async Task AddAsync(User user)
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Users user)
+        public async Task UpdateAsync(User user)
         {
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveAsync(Users user)
+        public async Task RemoveAsync(User user)
         {
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
@@ -59,6 +59,12 @@ namespace userRole.Repository.Implementation
 
         public async Task SaveChangesAsync()
         {
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddUsersAsync(List<User> users)
+        {
+            await _context.Users.AddRangeAsync(users);
             await _context.SaveChangesAsync();
         }
     }
